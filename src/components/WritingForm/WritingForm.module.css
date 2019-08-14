@@ -1,0 +1,9 @@
+.sentence {
+  margin-bottom: var(--spacing-s);
+}
+
+.actions {
+  margin-top: var(--spacing-s);
+  display: flex;
+  justify-content: flex-end;
+}

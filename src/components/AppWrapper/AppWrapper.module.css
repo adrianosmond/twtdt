@@ -1,0 +1,12 @@
+.wrapper {
+  margin: 0 auto;
+  max-width: 50rem;
+  padding: var(--spacing-m) var(--spacing-s);
+  min-height: 100vh;
+}
+
+@media (min-width: 32rem) {
+  .wrapper {
+    padding: var(--spacing-l);
+  }
+}

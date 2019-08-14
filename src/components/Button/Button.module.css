@@ -1,0 +1,27 @@
+.button {
+  margin: 0;
+  padding-top: 0;
+  padding: var(--spacing-xxs);
+  outline: 0;
+  border: 0;
+  border-bottom: 3px solid;
+  background-color: transparent;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+}
+
+.primary {
+  border-bottom-color: var(--color-primary);
+  font-weight: bold;
+}
+
+.secondary {
+  border-bottom-color: var(--color-secondary);
+}
+
+.logout {
+  font-size: var(--font-size-s);
+  border-bottom-color: var(--color-link);
+}
