@@ -10,7 +10,7 @@ const SignUpContainer = () => {
   const onSubmit = e => {
     e.preventDefault();
     createUser(email, password).catch(error =>
-      console.log('failed:', error.message),
+      console.error('failed:', error.message),
     );
   };
 

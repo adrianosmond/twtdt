@@ -7,6 +7,10 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [date, setDate] = useState(new Date());
+  const [history, setHistory] = useState({
+    loaded: false,
+    memories: [],
+  });
 
   useEffect(() => {
     return auth.onAuthStateChanged(authUser => {
@@ -23,7 +27,7 @@ export const AppProvider = ({ children }) => {
   }
 
   return (
-    <AppContext.Provider value={{ user, date, setDate }}>
+    <AppContext.Provider value={{ user, date, setDate, history, setHistory }}>
       {children}
     </AppContext.Provider>
   );

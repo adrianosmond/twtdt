@@ -17,3 +17,19 @@ export const updateMemory = (user, date, id, type, text) => {
 
 export const deleteMemory = (user, date, id) =>
   database.ref(`${user}/${date}/${id}`).remove();
+
+export const loadHistory = user => {
+  return database
+    .ref(`${user}`)
+    .once('value')
+    .then(res => {
+      const unprocessed = res.val();
+      const processed = [];
+      Object.entries(unprocessed).forEach(([date, memories]) => {
+        Object.entries(memories).forEach(([key, memory]) => {
+          processed.push({ date, ...memory, key });
+        });
+      });
+      return processed.reverse();
+    });
+};
