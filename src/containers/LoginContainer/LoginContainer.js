@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth } from 'database';
+import { login } from 'lib/auth';
 import LoginForm from 'components/LoginForm';
 
 const LoginContainer = () => {
@@ -7,9 +7,7 @@ const LoginContainer = () => {
   const [password, setPassword] = useState('');
   const onSubmit = e => {
     e.preventDefault();
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .catch(err => console.error(err));
+    login(email, password).catch(err => console.error(err));
   };
   return (
     <LoginForm

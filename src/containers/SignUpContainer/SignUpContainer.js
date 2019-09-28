@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth } from 'database';
+import { createUser } from 'lib/auth';
 import SignUpForm from 'components/SignUpForm';
 
 const SignUpContainer = () => {
@@ -9,9 +9,9 @@ const SignUpContainer = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .catch(error => console.log('failed:', error.message));
+    createUser(email, password).catch(error =>
+      console.log('failed:', error.message),
+    );
   };
 
   const formIsInvalid =

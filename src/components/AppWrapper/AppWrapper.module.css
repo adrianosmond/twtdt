@@ -10,3 +10,9 @@
     padding: var(--spacing-l);
   }
 }
+
+@media (min-width: 50rem) {
+  .wrapper {
+    position: relative;
+  }
+}

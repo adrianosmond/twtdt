@@ -21,7 +21,7 @@
   border-bottom-color: var(--color-secondary);
 }
 
-.logout {
+.header {
   font-size: var(--font-size-s);
   border-bottom-color: var(--color-link);
 }

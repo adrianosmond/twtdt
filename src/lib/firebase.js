@@ -14,6 +14,3 @@ const config = {
 app.initializeApp(config);
 
 export default app;
-
-export const database = app.database();
-export const auth = app.auth();

@@ -1,15 +1,14 @@
 import React from 'react';
-import { useUser } from 'contexts/AppContext';
-import { auth } from 'database';
+import { useApp } from 'contexts/AppContext';
 import UnauthenticatedContainer from 'containers/UnauthenticatedContainer';
 import AuthenticatedContainer from 'containers/AuthenticatedContainer';
 import AppWrapper from 'components/AppWrapper';
 
 function App() {
-  const user = useUser();
+  const { user, date } = useApp();
   const isAuthenticated = user !== false;
   return (
-    <AppWrapper isAuthenticated={isAuthenticated} logout={() => auth.signOut()}>
+    <AppWrapper isAuthenticated={isAuthenticated} date={date}>
       {isAuthenticated ? (
         <AuthenticatedContainer />
       ) : (
