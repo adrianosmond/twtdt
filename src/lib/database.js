@@ -1,33 +1,31 @@
-import { format } from 'date-fns';
 import firebaseApp from './firebase';
-
-const DATE_FORMAT = 'YYYY-MM-DD';
 
 export const database = firebaseApp.database();
 
-export const createMemory = (user, date, type, text) => {
-  const dateStr = format(date, DATE_FORMAT);
-  return database.ref(`${user}/${dateStr}`).push({ text, type });
-};
+export const deleteMemory = (user, date) =>
+  database.ref(`${user}/${date}`).remove();
 
-export const updateMemory = (user, date, id, type, text) => {
-  const dateStr = format(date, DATE_FORMAT);
-  return database.ref(`${user}/${dateStr}/${id}`).update({ type, text });
-};
+export const saveMemory = (user, date, text) =>
+  text === ''
+    ? deleteMemory(user, date)
+    : database.ref(`${user}/${date}`).set({ text });
 
-export const deleteMemory = (user, date, id) =>
-  database.ref(`${user}/${date}/${id}`).remove();
+export const loadMemory = (user, date) =>
+  database
+    .ref(`${user}/${date}`)
+    .once('value')
+    .then((res) => res.val()?.text);
 
-export const loadHistory = user => {
+export const loadHistory = (user) => {
   return database
     .ref(`${user}`)
     .once('value')
-    .then(res => {
+    .then((res) => {
       const unprocessed = res.val();
       const processed = [];
       Object.entries(unprocessed).forEach(([date, memories]) => {
         Object.entries(memories).forEach(([key, memory]) => {
-          processed.push({ date, ...memory, key });
+          processed.push({ date, text: memory, key });
         });
       });
       return processed.reverse();

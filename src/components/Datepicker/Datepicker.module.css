@@ -1,0 +1,14 @@
+.wrapper {
+  display: inline-block;
+  padding-top: 0;
+  padding: var(--spacing-xxs);
+  border-bottom: 3px solid var(--color-primary);
+}
+
+.datePicker {
+  outline: 0;
+  border: 0;
+  line-height: inherit;
+  border-radius: 0;
+  background-color: transparent;
+}

@@ -1,26 +1,25 @@
 import React from 'react';
 import TextArea from 'components/TextArea';
-import Select from 'components/Select';
+import Datepicker from 'components/Datepicker';
 import Button from 'components/Button';
 import classes from './WritingForm.module.css';
 
 const WritingForm = ({
-  type,
-  updateType,
+  date,
+  updateDate,
   content,
   updateContent,
-  memoryOptions,
   saveMemory,
+  today,
 }) => (
   <div>
     <div className={classes.sentence}>
-      I <Select options={memoryOptions} value={type} onChange={updateType} />{' '}
-      because...
+      <Datepicker value={date} onChange={updateDate} max={today} />
     </div>
     <TextArea
       value={content}
       onChange={updateContent}
-      placeholder="your reason goes here..."
+      placeholder="What you did goes here..."
     />
     <div className={classes.actions}>
       <Button onClick={saveMemory}>Save</Button>

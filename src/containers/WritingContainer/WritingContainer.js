@@ -1,39 +1,34 @@
-import React, { useState } from 'react';
-import { createMemory, updateMemory } from 'lib/database';
+import React, { useEffect, useState } from 'react';
+import { saveMemory, loadMemory } from 'lib/database';
+import { formatDateString } from 'utils/date';
 import { useApp } from 'contexts/AppContext';
 import WritingForm from 'components/WritingForm';
 
-const memoryOptions = [
-  { value: 'laughed', name: 'laughed' },
-  { value: 'cried', name: 'cried' },
-];
-
 const WritingContainer = () => {
-  const { user, date } = useApp();
-  const [id, setId] = useState(null);
-  const [type, setType] = useState(memoryOptions[0].value);
-  const [content, setContent] = useState('');
-  const updateType = e => {
-    setContent('');
-    setId(null);
-    setType(e.target.value);
-  };
-  const updateContent = e => setContent(e.target.value);
-  const saveMemory = () => {
-    if (id) {
-      return updateMemory(user, date, id, type, content);
-    }
-    return createMemory(user, date, type, content).then(ref => setId(ref.key));
-  };
+  const {
+    user,
+    date,
+    updateDate,
+    content,
+    updateContent,
+    setContent,
+  } = useApp();
+
+  const save = () => saveMemory(user, date, content);
+  const [today] = useState(formatDateString(new Date()));
+
+  useEffect(() => {
+    loadMemory(user, date).then((text) => setContent(text || ''));
+  }, [user, date, setContent]);
 
   return (
     <WritingForm
-      type={type}
-      updateType={updateType}
+      date={date}
+      updateDate={updateDate}
       content={content}
       updateContent={updateContent}
-      memoryOptions={memoryOptions}
-      saveMemory={saveMemory}
+      saveMemory={save}
+      today={today}
     />
   );
 };

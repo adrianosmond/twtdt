@@ -5,12 +5,10 @@ import classes from './History.module.css';
 const History = ({ memories }) => {
   return (
     <div className={classes.wrapper}>
-      {memories.map(({ date, type, text, key }) => (
+      {memories.map(({ date, text, key }) => (
         <div key={key} className={classes.item}>
           <Typography appearance="h2">{date}</Typography>
-          <p>
-            I {type} because {text}
-          </p>
+          <p>{text}</p>
         </div>
       ))}
     </div>
