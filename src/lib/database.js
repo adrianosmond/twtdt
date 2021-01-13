@@ -16,8 +16,8 @@ export const loadMemory = (user, date) =>
     .once('value')
     .then((res) => res.val()?.text);
 
-export const loadHistory = (user) => {
-  return database
+export const loadHistory = (user) =>
+  database
     .ref(`${user}`)
     .once('value')
     .then((res) => {
@@ -30,4 +30,3 @@ export const loadHistory = (user) => {
       });
       return processed.reverse();
     });
-};

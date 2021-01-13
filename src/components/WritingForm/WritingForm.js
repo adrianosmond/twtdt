@@ -1,4 +1,3 @@
-import React from 'react';
 import TextArea from 'components/TextArea';
 import Datepicker from 'components/Datepicker';
 import Button from 'components/Button';

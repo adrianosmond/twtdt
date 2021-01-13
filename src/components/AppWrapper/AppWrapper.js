@@ -1,4 +1,3 @@
-import React from 'react';
 import classes from './AppWrapper.module.css';
 
 const AppWrapper = ({ children }) => (

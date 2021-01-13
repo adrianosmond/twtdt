@@ -1,4 +1,3 @@
-import React from 'react';
 import CardForm from 'components/CardForm';
 import Input from 'components/Input';
 import Button from 'components/Button';

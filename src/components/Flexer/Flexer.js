@@ -1,4 +1,3 @@
-import React from 'react';
 import classes from './Flexer.module.css';
 
 const Flexer = ({ children }) => (

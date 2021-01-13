@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { logout } from 'lib/auth';
 import Button from 'components/Button';
@@ -13,7 +12,7 @@ const Header = () => {
   const { pathname } = useLocation();
   return (
     <div className={classes.wrapper}>
-      {links.map(link =>
+      {links.map((link) =>
         pathname !== link.pathname ? (
           <Button key={link.pathname} appearance="header" to={link.pathname}>
             {link.text}

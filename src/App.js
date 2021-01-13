@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,7 +20,7 @@ function App() {
       <AppWrapper>
         {isAuthenticated ? <Header /> : null}
         <Typography as="h1" appearance="h1">
-          Today was the day that
+          This was the day that
         </Typography>
         {isAuthenticated ? (
           <Switch>

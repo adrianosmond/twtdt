@@ -27,15 +27,17 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    return auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        setUser(authUser.uid);
-      } else {
-        setUser(false);
-      }
-    });
-  }, []);
+  useEffect(
+    () =>
+      auth.onAuthStateChanged((authUser) => {
+        if (authUser) {
+          setUser(authUser.uid);
+        } else {
+          setUser(false);
+        }
+      }),
+    [],
+  );
 
   if (user === null) {
     return <Loading />;
