@@ -8,6 +8,7 @@
   padding: 0;
   padding-bottom: var(--spacing-xs);
   resize: none;
+  background-color: transparent;
 }
 
 .textArea::placeholder {
