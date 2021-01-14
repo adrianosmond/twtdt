@@ -8,15 +8,15 @@ const Loading = () => (
       fill="none"
       className={classes.spinner}
     >
-      <circle cx="12" cy="12" r="10.5" stroke-width="3" stroke-opacity=".3" />
+      <circle cx="12" cy="12" r="10.5" strokeWidth="3" strokeOpacity=".3" />
       <circle
         cx="12"
         cy="12"
         r="10.5"
-        stroke-width="3"
-        stroke-dasharray="70"
-        stroke-dashoffset="50"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeDasharray="70"
+        strokeDashoffset="50"
+        strokeLinecap="round"
       />
     </svg>
   </div>

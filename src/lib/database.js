@@ -24,8 +24,8 @@ export const loadHistory = (user) =>
       const unprocessed = res.val();
       const processed = [];
       Object.entries(unprocessed).forEach(([date, memories]) => {
-        Object.entries(memories).forEach(([key, memory]) => {
-          processed.push({ date, text: memory, key });
+        Object.values(memories).forEach((memory) => {
+          processed.push({ date, text: memory, key: date });
         });
       });
       return processed.reverse();

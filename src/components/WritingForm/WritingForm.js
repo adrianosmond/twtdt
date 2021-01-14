@@ -1,6 +1,5 @@
 import TextArea from 'components/TextArea';
 import Datepicker from 'components/Datepicker';
-import Button from 'components/Button';
 import classes from './WritingForm.module.css';
 
 const WritingForm = ({
@@ -8,7 +7,6 @@ const WritingForm = ({
   updateDate,
   content,
   updateContent,
-  saveMemory,
   isSaving,
   today,
 }) => (
@@ -21,12 +19,7 @@ const WritingForm = ({
       onChange={updateContent}
       placeholder="What you did goes here..."
     />
-    <div className={classes.actions}>
-      {isSaving && <p>Saving...</p>}
-      <Button onClick={saveMemory} disabled={isSaving}>
-        Save
-      </Button>
-    </div>
+    {isSaving && <p>Saving...</p>}
   </div>
 );
 
