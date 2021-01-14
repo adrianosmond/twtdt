@@ -9,7 +9,7 @@ const HistoryContainer = () => {
   const { loaded, memories } = history;
   useEffect(() => {
     if (!loaded) {
-      loadHistory(user).then(loadedMemories => {
+      loadHistory(user).then((loadedMemories) => {
         setHistory({
           loaded: true,
           memories: loadedMemories,

@@ -7,9 +7,10 @@ const SignUpContainer = () => {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    createUser(email, password).catch(error =>
+    createUser(email, password).catch((error) =>
+      // eslint-disable-next-line no-console
       console.error('failed:', error.message),
     );
   };
@@ -24,11 +25,11 @@ const SignUpContainer = () => {
   return (
     <SignUpForm
       email={email}
-      setEmail={e => setEmail(e.target.value)}
+      setEmail={(e) => setEmail(e.target.value)}
       password={password}
-      setPassword={e => setPassword(e.target.value)}
+      setPassword={(e) => setPassword(e.target.value)}
       password2={password2}
-      setPassword2={e => setPassword2(e.target.value)}
+      setPassword2={(e) => setPassword2(e.target.value)}
       onSubmit={onSubmit}
       formIsInvalid={formIsInvalid}
     />
