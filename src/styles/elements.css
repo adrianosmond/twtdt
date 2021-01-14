@@ -21,9 +21,8 @@ body {
   body {
     background-color: var(--color-text);
     color: var(--color-gray-200);
-  }  
+  }
 }
-
 
 p,
 h1,

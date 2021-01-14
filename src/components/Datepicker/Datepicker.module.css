@@ -13,6 +13,7 @@
   background-color: transparent;
   color: inherit;
 }
+
 @media (prefers-color-scheme: dark) {
   .datePicker::-webkit-calendar-picker-indicator {
     filter: invert(0.8);
