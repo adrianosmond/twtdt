@@ -37,9 +37,14 @@ const WritingContainer = () => {
   const [today] = useState(formatDateString(new Date()));
 
   useEffect(() => {
+    // Don't save the current content onto a new date
     clearTimeout(typingTimeout.current);
     loadMemory(user, date).then((text) => {
       setContent(text || '');
+      setTimeout(() => {
+        // Don't re-save any existing content loaded from the new date
+        clearTimeout(typingTimeout.current);
+      }, 0);
     });
   }, [user, date, setContent]);
 
