@@ -9,6 +9,7 @@ const WritingForm = ({
   content,
   updateContent,
   saveMemory,
+  isSaving,
   today,
 }) => (
   <div>
@@ -21,7 +22,10 @@ const WritingForm = ({
       placeholder="What you did goes here..."
     />
     <div className={classes.actions}>
-      <Button onClick={saveMemory}>Save</Button>
+      {isSaving && <p>Saving...</p>}
+      <Button onClick={saveMemory} disabled={isSaving}>
+        Save
+      </Button>
     </div>
   </div>
 );

@@ -14,7 +14,12 @@ const WritingContainer = () => {
     setContent,
   } = useApp();
 
-  const save = () => saveMemory(user, date, content);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const save = () => {
+    setIsSaving(true);
+    saveMemory(user, date, content).finally(() => setIsSaving(false));
+  };
   const [today] = useState(formatDateString(new Date()));
 
   useEffect(() => {
@@ -28,6 +33,7 @@ const WritingContainer = () => {
       content={content}
       updateContent={updateContent}
       saveMemory={save}
+      isSaving={isSaving}
       today={today}
     />
   );

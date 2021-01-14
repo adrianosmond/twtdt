@@ -6,4 +6,9 @@
   margin-top: var(--spacing-s);
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+}
+
+.actions * + * {
+  margin-left: 1rem;
 }
