@@ -7,6 +7,7 @@ const WritingForm = ({
   updateDate,
   content,
   updateContent,
+  save,
   isSaving,
   today,
 }) => (
@@ -17,6 +18,7 @@ const WritingForm = ({
     <TextArea
       value={content}
       onChange={updateContent}
+      save={save}
       placeholder="What you did goes here..."
     />
     {isSaving && <p>Saving...</p>}

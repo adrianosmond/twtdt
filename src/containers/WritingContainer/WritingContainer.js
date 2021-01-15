@@ -26,12 +26,8 @@ const WritingContainer = () => {
   );
 
   useEffect(() => {
-    if (content.length > 0 && content.length % 10 === 0) {
-      save(content);
-    }
-
     clearTimeout(typingTimeout.current);
-    typingTimeout.current = setTimeout(() => save(content), 3000);
+    typingTimeout.current = setTimeout(() => save(content), 5000);
   }, [content, save]);
 
   const [today] = useState(formatDateString(new Date()));
@@ -54,6 +50,7 @@ const WritingContainer = () => {
       updateDate={updateDate}
       content={content}
       updateContent={updateContent}
+      save={save}
       isSaving={isSaving}
       today={today}
     />
