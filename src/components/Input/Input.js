@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import classes from './Input.module.css';
 
 const Input = ({
   type = 'text',
@@ -11,16 +10,16 @@ const Input = ({
 }) => (
   <label
     className={classnames({
-      [classes.wrapper]: true,
-      [className]: true,
+      'block my-4': true,
+      [className]: className,
     })}
   >
-    <div className={classes.label}>{label}</div>
+    <div className="mb-2">{label}</div>
     <input
       type={type}
       value={value}
       onChange={onChange}
-      className={classes.input}
+      className="w-full pb-2 border-b-2 border-gray-300 bg-transparent appearance-none rounded-none placeholder-gray-500 outline-none focus:border-blue-400"
       placeholder={placeholder}
     />
   </label>

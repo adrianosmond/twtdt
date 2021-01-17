@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
-import classes from './Button.module.css';
 
 const Button = ({
   type,
@@ -12,10 +11,14 @@ const Button = ({
   className,
 }) => {
   const classesToApply = classnames({
-    [classes.button]: true,
-    [classes[appearance]]: true,
-    [className]: true,
+    'p-1 border-b-2': true,
+    'font-bold border-yellow-500': appearance === 'primary',
+    'border-indigo-500': appearance === 'secondary',
+    'border-blue-400 text-xs': appearance === 'header',
+    'opacity-50 cursor-default': disabled,
+    [className]: className,
   });
+
   if (to) {
     return (
       <Link to={to} className={classesToApply}>
@@ -23,6 +26,7 @@ const Button = ({
       </Link>
     );
   }
+
   return (
     <button
       type={type}

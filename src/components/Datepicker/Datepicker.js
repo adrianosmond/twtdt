@@ -1,13 +1,11 @@
-import classes from './Datepicker.module.css';
-
 const Datepicker = ({ value, onChange, max }) => (
-  <div className={classes.wrapper}>
+  <div className="inline-block p-1 border-b-2 border-yellow-500">
     <input
       type="date"
       value={value}
       onChange={onChange}
       max={max}
-      className={classes.datePicker}
+      className="rounded-none appearance-none bg-transparent outline-none"
     />
   </div>
 );

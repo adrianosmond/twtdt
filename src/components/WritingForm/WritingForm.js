@@ -1,7 +1,6 @@
 import TextArea from 'components/TextArea';
 import Datepicker from 'components/Datepicker';
 import Loading from 'components/Loading';
-import classes from './WritingForm.module.css';
 
 const WritingForm = ({
   date,
@@ -14,7 +13,7 @@ const WritingForm = ({
   today,
 }) => (
   <div>
-    <div className={classes.sentence}>
+    <div className="mb-8">
       <Datepicker value={date} onChange={updateDate} max={today} />
     </div>
     {isLoading ? (

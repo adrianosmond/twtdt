@@ -1,21 +1,21 @@
 .wrapper {
   display: flex;
   flex-wrap: wrap;
-  margin: calc(var(--spacing-s) / -2);
+  margin: -0.5rem;
 }
 
 .wrapper > * {
   flex-grow: 1;
-  margin: calc(var(--spacing-s) / 2);
-  flex-basis: calc((32rem - 100%) * 999);
+  margin: 0.5rem;
+  flex-basis: calc((40rem - 100%) * 999);
 }
 
-@media (min-width: 32rem) {
+@media (min-width: 40rem) {
   .wrapper {
-    margin: calc(var(--spacing-l) / -2);
+    margin: -1rem;
   }
 
   .wrapper > * {
-    margin: calc(var(--spacing-l) / 2);
+    margin: 1rem;
   }
 }

@@ -1,9 +1,8 @@
 import TextareaAutosize from 'react-autosize-textarea';
-import classes from './TextArea.module.css';
 
 const TextArea = ({ value, onChange, save, placeholder }) => (
   <TextareaAutosize
-    className={classes.textArea}
+    className="w-full pb-2 border-b border-gray-300 bg-transparent appearance-none rounded-none resize-none placeholder-gray-500 outline-none focus:border-blue-400"
     value={value}
     onChange={onChange}
     onBlur={() => {
