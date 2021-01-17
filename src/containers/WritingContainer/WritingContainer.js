@@ -15,6 +15,7 @@ const WritingContainer = () => {
   } = useApp();
 
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const typingTimeout = useRef(null);
 
   const save = useCallback(
@@ -35,8 +36,10 @@ const WritingContainer = () => {
   useEffect(() => {
     // Don't save the current content onto a new date
     clearTimeout(typingTimeout.current);
+    setIsLoading(true);
     loadMemory(user, date).then((text) => {
       setContent(text || '');
+      setIsLoading(false);
       setTimeout(() => {
         // Don't re-save any existing content loaded from the new date
         clearTimeout(typingTimeout.current);
@@ -51,6 +54,7 @@ const WritingContainer = () => {
       content={content}
       updateContent={updateContent}
       save={save}
+      isLoading={isLoading}
       isSaving={isSaving}
       today={today}
     />

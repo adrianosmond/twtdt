@@ -1,5 +1,6 @@
 import TextArea from 'components/TextArea';
 import Datepicker from 'components/Datepicker';
+import Loading from 'components/Loading';
 import classes from './WritingForm.module.css';
 
 const WritingForm = ({
@@ -9,18 +10,23 @@ const WritingForm = ({
   updateContent,
   save,
   isSaving,
+  isLoading,
   today,
 }) => (
   <div>
     <div className={classes.sentence}>
       <Datepicker value={date} onChange={updateDate} max={today} />
     </div>
-    <TextArea
-      value={content}
-      onChange={updateContent}
-      save={save}
-      placeholder="What you did goes here..."
-    />
+    {isLoading ? (
+      <Loading />
+    ) : (
+      <TextArea
+        value={content}
+        onChange={updateContent}
+        save={save}
+        placeholder="What you did goes here..."
+      />
+    )}
     {isSaving && <p>Saving...</p>}
   </div>
 );
