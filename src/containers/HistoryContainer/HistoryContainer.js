@@ -7,6 +7,7 @@ import { loadHistory } from 'lib/database';
 const HistoryContainer = () => {
   const { user, history, setHistory } = useApp();
   const { loaded, memories } = history;
+
   useEffect(() => {
     if (!loaded) {
       loadHistory(user).then((loadedMemories) => {
@@ -17,9 +18,11 @@ const HistoryContainer = () => {
       });
     }
   }, [user, loaded, setHistory]);
+
   if (!loaded) {
     return <Loading />;
   }
+
   return <History memories={memories} />;
 };
 

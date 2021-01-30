@@ -19,13 +19,14 @@ export const loadMemory = (user, date) =>
 export const loadHistory = (user) =>
   database
     .ref(`${user}`)
+    .limitToLast(10)
     .once('value')
     .then((res) => {
       const unprocessed = res.val();
       const processed = [];
       Object.entries(unprocessed).forEach(([date, memories]) => {
         Object.values(memories).forEach((memory) => {
-          processed.push({ date, text: memory, key: date });
+          processed.push({ date: new Date(date), text: memory, key: date });
         });
       });
       return processed.reverse();
