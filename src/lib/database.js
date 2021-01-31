@@ -8,11 +8,11 @@ export const deleteMemory = (user, date) =>
 export const saveMemory = (user, date, text) =>
   text === ''
     ? deleteMemory(user, date)
-    : database.ref(`${user}/${date}`).set({ text });
+    : database.ref(`${user}/archive/${date}`).set({ text });
 
 export const loadMemory = (user, date) =>
   database
-    .ref(`${user}/${date}`)
+    .ref(`${user}/archive/${date}`)
     .once('value')
     .then((res) => res.val()?.text);
 
