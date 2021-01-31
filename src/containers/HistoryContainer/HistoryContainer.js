@@ -1,37 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from 'contexts/AppContext';
 import Loading from 'components/Loading';
 import History from 'components/History';
 import { loadDatesWithEntries } from 'lib/database';
 import { createCalendarDays } from 'utils/date';
+import MonthYearSelects from 'components/MonthYearSelects';
 
 const HistoryContainer = () => {
-  const { user, historyMonth, historyYear, history, setHistory } = useApp();
-  const { loaded, entries, dates } = history;
+  const [loaded, setLoaded] = useState(false);
+  const {
+    user,
+    historyMonth,
+    updateHistoryMonth,
+    historyYear,
+    updateHistoryYear,
+    historyYears,
+    history,
+    setHistory,
+  } = useApp();
+  const { entries, dates } = history;
 
   useEffect(() => {
-    if (!loaded) {
-      loadDatesWithEntries(user, historyYear, historyMonth).then((e) => {
-        setHistory({
-          loaded: true,
-          entries: e,
-          dates: createCalendarDays(historyYear, historyMonth),
-        });
+    setLoaded(false);
+    loadDatesWithEntries(user, historyYear, historyMonth).then((e) => {
+      setLoaded(true);
+      setHistory({
+        entries: e,
+        dates: createCalendarDays(historyYear, historyMonth),
       });
-    }
-  }, [user, loaded, setHistory, historyYear, historyMonth]);
-
-  if (!loaded) {
-    return <Loading />;
-  }
+    });
+  }, [user, setHistory, historyYear, historyMonth]);
 
   return (
-    <History
-      entries={entries}
-      dates={dates}
-      year={historyYear}
-      month={historyMonth}
-    />
+    <div>
+      <MonthYearSelects
+        month={historyMonth}
+        updateMonth={updateHistoryMonth}
+        year={historyYear}
+        updateYear={updateHistoryYear}
+        years={historyYears}
+      />
+      {!loaded ? <Loading /> : <History entries={entries} dates={dates} />}
+    </div>
   );
 };
 

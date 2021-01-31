@@ -1,8 +1,15 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useMemo,
+} from 'react';
 import { format } from 'date-fns';
 import { auth } from 'lib/auth';
-import { formatDateString } from 'utils/date';
+import { formatDateString, padWithZero } from 'utils/date';
 import Loading from 'components/Loading';
+import { database } from 'lib/database';
 
 const AppContext = createContext();
 
@@ -12,13 +19,38 @@ export const AppProvider = ({ children }) => {
   const [historyYear, setHistoryYear] = useState(format(new Date(), 'yyyy'));
   const [historyMonth, setHistoryMonth] = useState(format(new Date(), 'MM'));
   const [history, setHistory] = useState({
-    loaded: false,
     entries: [],
     dates: [],
   });
   const [content, setContent] = useState('');
+  const [earliestYear, setEarliestYear] = useState(new Date().getFullYear());
+  const historyYears = useMemo(
+    () => [
+      earliestYear,
+      ...new Array(new Date().getFullYear() - earliestYear)
+        .fill(0)
+        .map((_, i) => earliestYear + i + 1),
+    ],
+    [earliestYear],
+  );
 
-  const updateHistoryMonth = (e) => setHistoryMonth(e.target.value);
+  useEffect(() => {
+    const ref = database.ref(`${user}/archive/`).limitToFirst(1);
+
+    ref.on('value', (snapshot) => {
+      const earliestEntry = snapshot.val();
+      if (earliestEntry) {
+        const earliestDate = Object.keys(earliestEntry)[0];
+        const [year] = earliestDate.split('-');
+        setEarliestYear(parseInt(year, 10));
+      }
+    });
+
+    return () => ref.off('value');
+  }, [user]);
+
+  const updateHistoryMonth = (e) =>
+    setHistoryMonth(padWithZero(e.target.value));
   const updateHistoryYear = (e) => setHistoryYear(e.target.value);
   const updateContent = (e) => setContent(e.target.value);
   const updateDate = (e) => {
@@ -64,6 +96,7 @@ export const AppProvider = ({ children }) => {
         updateHistoryMonth,
         historyYear,
         updateHistoryYear,
+        historyYears,
       }}
     >
       {children}

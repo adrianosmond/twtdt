@@ -4,12 +4,19 @@ import firebaseApp from './firebase';
 export const database = firebaseApp.database();
 
 export const deleteMemory = (user, date) =>
-  database.ref(`${user}/${date}`).remove();
+  database.ref(`${user}/archive/${date}`).remove();
+
+const setHistory = (user, date, value) => {
+  const [year, month, day] = date.split('-');
+
+  return database.ref(`${user}/dates/${year}/${month}/${day}`).set(value);
+};
 
 export const saveMemory = (user, date, text) =>
-  text === ''
-    ? deleteMemory(user, date)
-    : database.ref(`${user}/archive/${date}`).set({ text });
+  Promise.all([
+    setHistory(user, date, text === '' ? null : true),
+    database.ref(`${user}/archive/${date}`).set(text === '' ? null : { text }),
+  ]);
 
 export const loadMemory = (user, date) =>
   database
@@ -25,4 +32,11 @@ export const loadDatesWithEntries = (
   database
     .ref(`${user}/dates/${year}/${month}`)
     .once('value')
-    .then((res) => Object.keys(res.val()));
+    .then((res) => {
+      const dates = res.val();
+      if (dates) {
+        return Object.keys(dates);
+      }
+
+      return [];
+    });

@@ -35,7 +35,7 @@ const getNumDaysInMonth = (month, year) => {
   return [undefined, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
 };
 
-const padWithZero = (number) => number.toString().padStart(2, '0');
+export const padWithZero = (number) => number.toString().padStart(2, '0');
 
 export const createCalendarDays = (yearStr, monthStr) => {
   let i;
