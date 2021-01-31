@@ -1,14 +1,12 @@
-import Typography from 'components/Typography';
-import { humanFriendlyDateString } from 'utils/date';
+import Calendar from 'components/Calendar';
+import { MONTHS_IN_YEAR } from 'utils/date';
 
-const History = ({ memories }) => (
+const History = ({ year, month, entries, dates }) => (
   <div>
-    {memories.map(({ date, text, key }) => (
-      <div key={key} className="mb-8">
-        <Typography appearance="h2">{humanFriendlyDateString(date)}</Typography>
-        <p>{text}</p>
-      </div>
-    ))}
+    <div className="mb-8 flex justify-center">
+      {MONTHS_IN_YEAR[parseInt(month, 10)]} {year}
+    </div>
+    <Calendar entries={entries} dates={dates} />
   </div>
 );
 

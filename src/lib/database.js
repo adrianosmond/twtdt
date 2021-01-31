@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import firebaseApp from './firebase';
 
 export const database = firebaseApp.database();
@@ -16,18 +17,12 @@ export const loadMemory = (user, date) =>
     .once('value')
     .then((res) => res.val()?.text);
 
-export const loadHistory = (user) =>
+export const loadDatesWithEntries = (
+  user,
+  year = format(new Date(), 'yyyy'),
+  month = format(new Date(), 'MM'),
+) =>
   database
-    .ref(`${user}/archive`)
-    .limitToLast(10)
+    .ref(`${user}/dates/${year}/${month}`)
     .once('value')
-    .then((res) => {
-      const unprocessed = res.val();
-      const processed = [];
-      Object.entries(unprocessed).forEach(([date, memories]) => {
-        Object.values(memories).forEach((memory) => {
-          processed.push({ date: new Date(date), text: memory, key: date });
-        });
-      });
-      return processed.reverse();
-    });
+    .then((res) => Object.keys(res.val()));
