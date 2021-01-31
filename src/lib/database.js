@@ -18,7 +18,7 @@ export const loadMemory = (user, date) =>
 
 export const loadHistory = (user) =>
   database
-    .ref(`${user}`)
+    .ref(`${user}/archive`)
     .limitToLast(10)
     .once('value')
     .then((res) => {
