@@ -56,7 +56,10 @@ export const createCalendarDays = (yearStr, monthStr) => {
     ) {
       days.push({
         day: i,
+        dayStr: padWithZero(i),
         month: prevMonth,
+        monthStr: padWithZero(prevMonth),
+        yearStr,
         inMonth: false,
       });
     }
@@ -76,7 +79,10 @@ export const createCalendarDays = (yearStr, monthStr) => {
   for (i = 1; days.length % 7 !== 0; i += 1) {
     days.push({
       day: i,
+      dayStr: padWithZero(i),
       month: month + 1,
+      monthStr: padWithZero(month + 1),
+      yearStr,
       inMonth: false,
     });
   }

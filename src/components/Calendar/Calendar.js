@@ -10,10 +10,12 @@ const Calendar = ({ entries, dates }) => (
     <div className="font-bold">F</div>
     <div className="font-bold">S</div>
     <div className="font-bold">S</div>
-    {dates.map(({ day, yearStr, monthStr, dayStr, inMonth }) =>
-      inMonth && entries.includes(dayStr) ? (
-        <Link
-          to={`${yearStr}-${monthStr}-${dayStr}`}
+    {dates.map(({ day, yearStr, monthStr, dayStr, inMonth }) => {
+      const canLink = inMonth && entries.includes(dayStr);
+      const Tag = canLink ? Link : 'div';
+      return (
+        <Tag
+          {...(canLink ? { to: `${yearStr}-${monthStr}-${dayStr}` } : {})}
           key={`${yearStr}-${monthStr}-${dayStr}`}
           className={classNames({
             'flex flex-col items-center': true,
@@ -24,28 +26,12 @@ const Calendar = ({ entries, dates }) => (
           <div
             className={classNames({
               'w-2 h-2 rounded full bg-yellow-500 m-2': true,
-              'opacity-0': !entries.includes(dayStr),
+              'opacity-0': !canLink,
             })}
           ></div>
-        </Link>
-      ) : (
-        <div
-          key={`${yearStr}-${monthStr}-${dayStr}`}
-          className={classNames({
-            'flex flex-col items-center': true,
-            'opacity-30': !inMonth,
-          })}
-        >
-          {day}
-          <div
-            className={classNames({
-              'w-2 h-2 rounded full bg-yellow-500 m-2': true,
-              'opacity-0': !entries.includes(dayStr),
-            })}
-          ></div>
-        </div>
-      ),
-    )}
+        </Tag>
+      );
+    })}
   </div>
 );
 
