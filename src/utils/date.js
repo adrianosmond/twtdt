@@ -67,7 +67,8 @@ export const createCalendarDays = (yearStr, monthStr) => {
       day: i,
       dayStr: padWithZero(i),
       month,
-      monthStr,
+      monthStr: padWithZero(month),
+      yearStr,
       inMonth: true,
     });
   }

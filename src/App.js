@@ -11,9 +11,12 @@ import UnauthenticatedContainer from 'containers/UnauthenticatedContainer';
 import AppWrapper from 'components/AppWrapper';
 import Header from 'components/Header';
 import Typography from 'components/Typography';
+import { formatDateString } from 'utils/date';
 
 function App() {
   const { user } = useApp();
+  const today = formatDateString(new Date());
+
   const isAuthenticated = user !== false;
   return (
     <Router>
@@ -24,8 +27,9 @@ function App() {
         </Typography>
         {isAuthenticated ? (
           <Switch>
-            <Route path="/" exact component={WritingContainer} />
-            <Route path="/history" component={HistoryContainer} />
+            <Route path="/history" exact component={HistoryContainer} />
+            <Route path="/:date" component={WritingContainer} />
+            <Redirect to={`/${today}`} />
           </Switch>
         ) : (
           <Switch>
