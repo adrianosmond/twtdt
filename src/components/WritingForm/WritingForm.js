@@ -12,7 +12,7 @@ const WritingForm = ({
   isLoading,
   today,
 }) => (
-  <div>
+  <>
     <div className="mb-8">
       <Datepicker value={date} onChange={updateDate} max={today} />
     </div>
@@ -24,10 +24,12 @@ const WritingForm = ({
         onChange={updateContent}
         save={save}
         placeholder="What you did goes here..."
+        className="flex-grow"
+        style={{ minHeight: '12rem' }}
       />
     )}
     {isSaving && <p>Saving...</p>}
-  </div>
+  </>
 );
 
 export default WritingForm;
