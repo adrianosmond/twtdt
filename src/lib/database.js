@@ -40,3 +40,17 @@ export const loadDatesWithEntries = (
 
       return [];
     });
+
+export const createTag = (user, type, name) =>
+  database.ref(`${user}/tags`).push({ type, name });
+
+export const addTagToDate = (user, date, tagId) =>
+  Promise.all([
+    database.ref(`${user}/archive/${date}/tags/${tagId}`).set(true),
+    database.ref(`${user}/tags/${tagId}/dates/${date}`).set(true),
+  ]);
+
+export const createTagAndAddToDate = (user, type, name, date) =>
+  createTag(user, type, name).then(({ key }) => {
+    addTagToDate(user, date, key);
+  });

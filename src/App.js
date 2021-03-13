@@ -4,7 +4,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import { useApp } from 'contexts/AppContext';
+import { useUser } from 'contexts/UserContext';
 import WritingContainer from 'containers/WritingContainer';
 import HistoryContainer from 'containers/HistoryContainer';
 import UnauthenticatedContainer from 'containers/UnauthenticatedContainer';
@@ -14,7 +14,7 @@ import Typography from 'components/Typography';
 import { formatDateString } from 'utils/date';
 
 function App() {
-  const { user } = useApp();
+  const user = useUser();
   const today = formatDateString(new Date());
 
   const isAuthenticated = user !== false;

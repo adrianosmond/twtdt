@@ -1,6 +1,7 @@
 import TextArea from 'components/TextArea';
 import Datepicker from 'components/Datepicker';
 import Loading from 'components/Loading';
+import TagButton from 'components/TagButton';
 
 const WritingForm = ({
   date,
@@ -13,8 +14,9 @@ const WritingForm = ({
   today,
 }) => (
   <>
-    <div className="mb-8">
+    <div className="flex justify-between mb-8">
       <Datepicker value={date} onChange={updateDate} max={today} />
+      <TagButton date={date} />
     </div>
     {isLoading ? (
       <Loading />

@@ -2,11 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { saveMemory, loadMemory } from 'lib/database';
 import { formatDateString } from 'utils/date';
-import { useApp } from 'contexts/AppContext';
+import { useUser } from 'contexts/UserContext';
+import { useMemory } from 'contexts/MemoryContext';
 import WritingForm from 'components/WritingForm';
 
 const WritingContainer = () => {
-  const { user, content, updateContent, setContent } = useApp();
+  const user = useUser();
+  const { memory, updateMemory, setMemory } = useMemory();
 
   const { date } = useParams();
   const history = useHistory();
@@ -38,8 +40,8 @@ const WritingContainer = () => {
 
   useEffect(() => {
     clearTimeout(typingTimeout.current);
-    typingTimeout.current = setTimeout(() => save(content), 5000);
-  }, [content, save]);
+    typingTimeout.current = setTimeout(() => save(memory), 5000);
+  }, [memory, save]);
 
   const [today] = useState(formatDateString(new Date()));
 
@@ -48,21 +50,21 @@ const WritingContainer = () => {
     clearTimeout(typingTimeout.current);
     setIsLoading(true);
     loadMemory(user, date).then((text) => {
-      setContent(text || '');
+      setMemory(text || '');
       setIsLoading(false);
       setTimeout(() => {
         // Don't re-save any existing content loaded from the new date
         clearTimeout(typingTimeout.current);
       }, 0);
     });
-  }, [user, date, setContent]);
+  }, [user, date, setMemory]);
 
   return (
     <WritingForm
       date={date}
       updateDate={updateDate}
-      content={content}
-      updateContent={updateContent}
+      content={memory}
+      updateContent={updateMemory}
       save={save}
       isLoading={isLoading}
       isSaving={isSaving}

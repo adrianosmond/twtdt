@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useApp } from 'contexts/AppContext';
+import { useHistory } from 'contexts/HistoryContext';
 import Loading from 'components/Loading';
 import History from 'components/History';
 import { loadDatesWithEntries } from 'lib/database';
@@ -17,7 +17,7 @@ const HistoryContainer = () => {
     historyYears,
     history,
     setHistory,
-  } = useApp();
+  } = useHistory();
   const { entries, dates } = history;
 
   useEffect(() => {

@@ -10,6 +10,13 @@ const LoginContainer = () => {
     // eslint-disable-next-line no-console
     login(email, password).catch((err) => console.error(err));
   };
+
+  const formIsInvalid =
+    !email.includes('@') ||
+    !email.includes('.') ||
+    email.length < 1 ||
+    password.length < 1;
+
   return (
     <LoginForm
       email={email}
@@ -17,6 +24,7 @@ const LoginContainer = () => {
       password={password}
       setPassword={(e) => setPassword(e.target.value)}
       onSubmit={onSubmit}
+      formIsInvalid={formIsInvalid}
     />
   );
 };

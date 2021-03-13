@@ -2,7 +2,14 @@ import CardForm from 'components/CardForm';
 import Input from 'components/Input';
 import Button from 'components/Button';
 
-const LoginForm = ({ email, setEmail, password, setPassword, onSubmit }) => (
+const LoginForm = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  onSubmit,
+  formIsInvalid,
+}) => (
   <CardForm
     title="Log in"
     onSubmit={onSubmit}
@@ -22,7 +29,7 @@ const LoginForm = ({ email, setEmail, password, setPassword, onSubmit }) => (
         />
       </>
     }
-    button={<Button>Log in</Button>}
+    button={<Button disabled={formIsInvalid}>Log in</Button>}
   />
 );
 

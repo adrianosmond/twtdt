@@ -11,8 +11,9 @@ const Button = ({
   className,
 }) => {
   const classesToApply = classnames({
-    'p-1 border-b-2': true,
-    'font-bold border-yellow-500': appearance === 'primary',
+    'p-1 border-b-2 focus:outline-none': true,
+    'font-bold border-yellow-500 focus:border-indigo-500':
+      appearance === 'primary',
     'border-indigo-500': appearance === 'secondary',
     'border-blue-400 text-xs': appearance === 'header',
     'opacity-50 cursor-default': disabled,
