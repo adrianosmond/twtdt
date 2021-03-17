@@ -33,6 +33,12 @@ export const TagProvider = ({ children }) => {
   const updateTagName = (e) => setTagName(e.target.value);
   const updateTagType = (e) => setTagType(e.target.value);
 
+  const getTagsForDate = useCallback(
+    (date) =>
+      allTags.filter(({ dates }) => dates && Object.keys(dates).includes(date)),
+    [allTags],
+  );
+
   const assignNewTag = useCallback(
     (date) => createTagAndAddToDate(user, tagType, tagName, date),
     [tagName, tagType, user],
@@ -78,6 +84,7 @@ export const TagProvider = ({ children }) => {
         assignTag,
         allTags,
         matchingTags,
+        getTagsForDate,
       }}
     >
       {children}
