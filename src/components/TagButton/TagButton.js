@@ -8,7 +8,7 @@ import TagList from 'components/TagList';
 
 const TagButton = ({ date }) => {
   const [menuOpen, setMenuOpen, toggleMenu] = useToggle(false);
-  const { setTagName, getTagsForDate } = useTag();
+  const { setTagName, getTagsForDate, tagName } = useTag();
 
   const resetForm = useCallback(() => {
     setMenuOpen(false);
@@ -33,7 +33,7 @@ const TagButton = ({ date }) => {
       menuContent={
         <>
           <TagForm onActionComplete={resetForm} date={date} />
-          {hasTags && (
+          {hasTags && !tagName && (
             <div className="mt-4">
               <TagList tags={todaysTags} />
             </div>
