@@ -26,9 +26,23 @@ export const TagProvider = ({ children }) => {
   const matchingTags =
     tagName.length === 0
       ? []
-      : allTags.filter(({ name }) =>
-          name.toLowerCase().includes(tagName.toLowerCase()),
-        );
+      : allTags
+          .filter(({ name }) =>
+            name.toLowerCase().includes(tagName.toLowerCase()),
+          )
+          .sort((tag1, tag2) => {
+            const pos1 = tag1.name.toLowerCase().indexOf(tagName.toLowerCase());
+            const pos2 = tag2.name.toLowerCase().indexOf(tagName.toLowerCase());
+
+            if (pos1 === pos2) {
+              if (tag1.name === tag2.name) {
+                return 0;
+              }
+              return tag1.name > tag2.name ? 1 : -1;
+            }
+
+            return pos1 - pos2;
+          });
 
   const updateTagName = (e) => setTagName(e.target.value);
   const updateTagType = (e) => setTagType(e.target.value);
