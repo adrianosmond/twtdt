@@ -2,7 +2,7 @@ import { logout } from 'lib/auth';
 import Button from 'components/Button';
 
 const links = [
-  { pathname: '/', text: 'Home' },
+  { pathname: '/', text: 'Today' },
   { pathname: '/history', text: 'History' },
 ];
 
