@@ -1,4 +1,3 @@
-import { useCallback, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,8 +5,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { useUser } from 'contexts/UserContext';
-import { formatDateString } from 'utils/date';
-import usePageVisibilityChange from 'hooks/usePageVisibilityChange';
+import useTodaysDate from 'hooks/useTodaysDate';
 import WritingContainer from 'containers/WritingContainer';
 import HistoryContainer from 'containers/HistoryContainer';
 import UnauthenticatedContainer from 'containers/UnauthenticatedContainer';
@@ -17,12 +15,7 @@ import Typography from 'components/Typography';
 
 function App() {
   const user = useUser();
-  const [today, setToday] = useState(formatDateString(new Date()));
-  const updateToday = useCallback(() => {
-    setToday(formatDateString(new Date()));
-  }, []);
-
-  usePageVisibilityChange({ onShow: updateToday });
+  const today = useTodaysDate();
 
   const isAuthenticated = user !== false;
   return (
