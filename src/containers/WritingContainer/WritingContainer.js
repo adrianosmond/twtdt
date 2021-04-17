@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { saveMemory, loadMemory } from 'lib/database';
 import usePageVisibilityChange from 'hooks/usePageVisibilityChange';
@@ -10,6 +10,7 @@ import WritingForm from 'components/WritingForm';
 const WritingContainer = () => {
   const user = useUser();
   const { memory, updateMemory, setMemory } = useMemory();
+  const toSave = useRef(memory);
   const { date } = useParams();
   const history = useHistory();
   const [isSaving, setIsSaving] = useState(false);
@@ -29,13 +30,10 @@ const WritingContainer = () => {
     [history],
   );
 
-  const save = useCallback(
-    (text) => {
-      setIsSaving(true);
-      saveMemory(user, date, text).finally(() => setIsSaving(false));
-    },
-    [user, date],
-  );
+  const save = useCallback(() => {
+    setIsSaving(true);
+    saveMemory(user, date, toSave.current).finally(() => setIsSaving(false));
+  }, [user, date]);
 
   const load = useCallback(() => {
     setIsLoading(true);
@@ -49,7 +47,11 @@ const WritingContainer = () => {
     load();
   }, [load]);
 
-  usePageVisibilityChange({ onShow: load });
+  useEffect(() => {
+    toSave.current = memory;
+  }, [memory]);
+
+  usePageVisibilityChange({ onShow: load, onHide: save });
 
   return (
     <WritingForm
