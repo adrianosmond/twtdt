@@ -24,7 +24,7 @@ const WritingForm = ({
       <TextArea
         value={content}
         onChange={updateContent}
-        save={save}
+        onBlur={save}
         placeholder="What you did goes here..."
         className="flex-grow"
         style={{ minHeight: '12rem' }}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useUser } from 'contexts/UserContext';
 import { useHistory } from 'contexts/HistoryContext';
 import Loading from 'components/Loading';
 import History from 'components/History';
@@ -8,8 +9,8 @@ import MonthYearSelects from 'components/MonthYearSelects';
 
 const HistoryContainer = () => {
   const [loaded, setLoaded] = useState(false);
+  const user = useUser();
   const {
-    user,
     historyMonth,
     updateHistoryMonth,
     historyYear,
