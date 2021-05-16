@@ -4,6 +4,7 @@ import Button from 'components/Button';
 const links = [
   { pathname: '/', text: 'Today' },
   { pathname: '/history', text: 'History' },
+  { pathname: '/tags', text: 'Tags' },
 ];
 
 const Header = () => (

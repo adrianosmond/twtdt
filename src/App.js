@@ -8,6 +8,8 @@ import { useUser } from 'contexts/UserContext';
 import useTodaysDate from 'hooks/useTodaysDate';
 import WritingContainer from 'containers/WritingContainer';
 import HistoryContainer from 'containers/HistoryContainer';
+import AllTagsContainer from 'containers/AllTagsContainer';
+import TagsContainer from 'containers/TagsContainer';
 import UnauthenticatedContainer from 'containers/UnauthenticatedContainer';
 import AppWrapper from 'components/AppWrapper';
 import Header from 'components/Header';
@@ -28,6 +30,8 @@ function App() {
         {isAuthenticated ? (
           <Switch>
             <Route path="/history" exact component={HistoryContainer} />
+            <Route path="/tags" exact component={AllTagsContainer} />
+            <Route path="/tags/:tagId" exact component={TagsContainer} />
             <Route path="/:date" component={WritingContainer} />
             <Redirect to={`/${today}`} />
           </Switch>
