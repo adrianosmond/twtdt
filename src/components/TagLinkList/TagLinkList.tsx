@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
 import Typography from 'components/Typography';
+import { KeyedTag } from 'contexts/TagContext';
+import { FC } from 'react';
 
-const TagLinkList = ({ heading, tags }) => (
+interface TagLinkListProps {
+  heading: string;
+  tags: KeyedTag[];
+}
+
+const TagLinkList: FC<TagLinkListProps> = ({ heading, tags }) => (
   <>
-    <Typography appearance="h2" as="h2" className="mt-6">
+    <Typography appearance="h2" tagName="h2" className="mt-6">
       {heading}
     </Typography>
     <ul>

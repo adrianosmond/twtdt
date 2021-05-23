@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import Tags from 'components/Tags';
 import { useTag, TAG_TYPES } from 'contexts/TagContext';
 
-const AllTagsContainer = () => {
+const AllTagsContainer: FC = () => {
   const { allTags } = useTag();
 
   const people = allTags.filter((tag) => tag.type === TAG_TYPES.PERSON);
