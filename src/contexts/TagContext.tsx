@@ -9,7 +9,12 @@ import {
   FC,
   ChangeEvent,
 } from 'react';
-import { database, createTagAndAddToDate, addTagToDate } from 'lib/database';
+import {
+  database,
+  createTagAndAddToDate,
+  addTagToDate,
+  removeTagFromDate,
+} from 'lib/database';
 import { useUser } from './UserContext';
 
 export enum TAG_TYPES {
@@ -38,6 +43,7 @@ interface ITagContext {
   updateTagType: (e: ChangeEvent<HTMLSelectElement>) => void;
   assignNewTag: (date: string) => Promise<void>;
   assignTag: (date: string, tagId: string) => void;
+  removeTag: (date: string, tagId: string) => void;
   allTags: KeyedTag[];
   matchingTags: KeyedTag[];
   getTagsForDate: (date: string) => KeyedTag[];
@@ -95,6 +101,11 @@ export const TagProvider: FC = ({ children }) => {
     [user],
   );
 
+  const removeTag = useCallback(
+    (date, tagId) => removeTagFromDate(user, date, tagId),
+    [user],
+  );
+
   useEffect(() => {
     const ref = database.ref(`${user}/tags/`);
 
@@ -128,6 +139,7 @@ export const TagProvider: FC = ({ children }) => {
         updateTagType,
         assignNewTag,
         assignTag,
+        removeTag,
         allTags,
         matchingTags,
         getTagsForDate,

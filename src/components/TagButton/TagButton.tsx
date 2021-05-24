@@ -12,7 +12,7 @@ interface TagButtonProps {
 
 const TagButton: FC<TagButtonProps> = ({ date }) => {
   const [menuOpen, setMenuOpen, toggleMenu] = useToggle(false);
-  const { setTagName, getTagsForDate, tagName } = useTag();
+  const { setTagName, getTagsForDate, tagName, removeTag } = useTag();
 
   const resetForm = useCallback(() => {
     setMenuOpen(false);
@@ -21,6 +21,11 @@ const TagButton: FC<TagButtonProps> = ({ date }) => {
 
   const todaysTags = getTagsForDate(date);
   const hasTags = todaysTags.length > 0;
+
+  const removeTagFromDate = useCallback((tagId) => removeTag(date, tagId), [
+    date,
+    removeTag,
+  ]);
 
   return (
     <ToggleMenu
@@ -39,7 +44,7 @@ const TagButton: FC<TagButtonProps> = ({ date }) => {
           <TagForm onActionComplete={resetForm} date={date} />
           {hasTags && !tagName && (
             <div className="mt-4">
-              <TagList tags={todaysTags} />
+              <TagList tags={todaysTags} removeTag={removeTagFromDate} />
             </div>
           )}
         </>

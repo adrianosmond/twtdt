@@ -71,11 +71,7 @@ export const addTagToDate = (
     firebaseApp.database.ThenableReference,
     firebaseApp.database.ThenableReference,
   ]
-> =>
-  Promise.all([
-    database.ref(`${user}/archive/${date}/tags/${tagId}`).set(true),
-    database.ref(`${user}/tags/${tagId}/dates/${date}`).set(true),
-  ]);
+> => database.ref(`${user}/tags/${tagId}/dates/${date}`).set(true);
 
 export const createTagAndAddToDate = (
   user: string,
@@ -88,3 +84,25 @@ export const createTagAndAddToDate = (
       addTagToDate(user, date, key);
     }
   });
+
+export const removeTagFromDate = (
+  user: string,
+  date: string,
+  tagId: string,
+): Promise<void> =>
+  database
+    .ref(`${user}/tags/${tagId}/dates/${date}`)
+    .set(null)
+    // If that was the only time the tag was in use, delete the whole thing
+    .then(() =>
+      database
+        .ref(`${user}/tags/${tagId}/dates/`)
+        .once('value')
+        .then((res) => {
+          const dates = res.val();
+          if (!dates) {
+            return database.ref(`${user}/tags/${tagId}`).set(null);
+          }
+          return null;
+        }),
+    );
