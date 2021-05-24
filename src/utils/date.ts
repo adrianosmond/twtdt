@@ -11,7 +11,7 @@ export type CalendarDay = {
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-const READABLE_DATE_FORMAT = 'MMMM Do, yyyy';
+const READABLE_DATE_FORMAT = 'MMMM do, yyyy';
 
 export const MONTHS_IN_YEAR = [
   'January',

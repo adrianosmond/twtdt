@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import TagLinkList from 'components/TagLinkList';
-import { KeyedTag } from 'contexts/TagContext';
+import { KeyedTag, TAG_TYPES } from 'contexts/TagContext';
 
 interface TagsProps {
   people: KeyedTag[];
@@ -9,11 +9,11 @@ interface TagsProps {
 }
 
 const Tags: FC<TagsProps> = ({ people, places, others }) => (
-  <>
-    <TagLinkList heading="People" tags={people} />
-    <TagLinkList heading="Places" tags={places} />
-    <TagLinkList heading="Others" tags={others} />
-  </>
+  <div className="mt-6 space-y-8">
+    <TagLinkList heading="People" tags={people} tagType={TAG_TYPES.PERSON} />
+    <TagLinkList heading="Places" tags={places} tagType={TAG_TYPES.PLACE} />
+    <TagLinkList heading="Others" tags={others} tagType={TAG_TYPES.GENERIC} />
+  </div>
 );
 
 export default Tags;

@@ -1,26 +1,29 @@
-import { Link } from 'react-router-dom';
-import Typography from 'components/Typography';
-import { KeyedTag } from 'contexts/TagContext';
 import { FC } from 'react';
+import { KeyedTag, TAG_TYPES } from 'contexts/TagContext';
+import LinkList from 'components/LinkList';
+import TagHeading from 'components/TagHeading';
 
 interface TagLinkListProps {
   heading: string;
   tags: KeyedTag[];
+  tagType: TAG_TYPES;
 }
 
-const TagLinkList: FC<TagLinkListProps> = ({ heading, tags }) => (
-  <>
-    <Typography appearance="h2" tagName="h2" className="mt-6">
-      {heading}
-    </Typography>
-    <ul>
-      {tags.map((tag) => (
-        <li key={tag.key}>
-          <Link to={`/tags/${tag.key}`}>{tag.name}</Link>
-        </li>
-      ))}
-    </ul>
-  </>
+const TagLinkList: FC<TagLinkListProps> = ({ heading, tags, tagType }) => (
+  <div>
+    <TagHeading heading={heading} tagType={tagType} />
+    {tags.length === 0 ? (
+      <p className="text-sm text-gray-600">None yet</p>
+    ) : (
+      <LinkList
+        links={tags.map((tag) => ({
+          to: `/tags/${tag.key}`,
+          key: tag.key,
+          text: tag.name,
+        }))}
+      />
+    )}
+  </div>
 );
 
 export default TagLinkList;
