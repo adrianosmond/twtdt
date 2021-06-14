@@ -23,7 +23,7 @@ const NewTagButton: FC<NewTagButtonProps> = ({
         onChange={updateTagType}
       >
         {Object.keys(TAG_TYPES).map((type) => (
-          <option value={type} key={type}>
+          <option value={type} key={type} selected={tagType === type}>
             {type}
           </option>
         ))}
