@@ -1,77 +1,73 @@
+import {
+  get,
+  getDatabase,
+  push,
+  ref,
+  remove,
+  set,
+  ThenableReference,
+} from 'firebase/database';
 import { TAG_TYPES } from 'contexts/TagContext';
 import { format } from 'date-fns';
 import firebaseApp from './firebase';
 
-export const database = firebaseApp.database();
+export const database = getDatabase(firebaseApp);
 
 export const deleteMemory = (user: string, date: string): Promise<void> =>
-  database.ref(`${user}/archive/${date}`).remove();
+  remove(ref(database, `${user}/archive/${date}`));
 
 const setHistory = (
   user: string,
   date: string,
   value: boolean | null,
-): Promise<firebaseApp.database.ThenableReference> => {
+): Promise<void> => {
   const [year, month, day] = date.split('-');
 
-  return database.ref(`${user}/dates/${year}/${month}/${day}`).set(value);
+  return set(ref(database, `${user}/dates/${year}/${month}/${day}`), value);
 };
 
 export const saveMemory = (
   user: string,
   date: string,
   text: string,
-): Promise<
-  [
-    firebaseApp.database.ThenableReference,
-    firebaseApp.database.ThenableReference,
-  ]
-> =>
+): Promise<[void, void]> =>
   Promise.all([
     setHistory(user, date, text === '' ? null : true),
-    database.ref(`${user}/archive/${date}`).set(text === '' ? null : { text }),
+    set(
+      ref(database, `${user}/archive/${date}`),
+      text === '' ? null : { text },
+    ),
   ]);
 
 export const loadMemory = (user: string, date: string): Promise<string> =>
-  database
-    .ref(`${user}/archive/${date}`)
-    .once('value')
-    .then((res) => res.val()?.text);
+  get(ref(database, `${user}/archive/${date}`)).then((res) => res.val()?.text);
 
 export const loadDatesWithEntries = (
   user: string,
   year = format(new Date(), 'yyyy'),
   month = format(new Date(), 'MM'),
 ): Promise<string[]> =>
-  database
-    .ref(`${user}/dates/${year}/${month}`)
-    .once('value')
-    .then((res) => {
-      const dates = res.val();
-      if (dates) {
-        return Object.keys(dates);
-      }
+  get(ref(database, `${user}/dates/${year}/${month}`)).then((res) => {
+    const dates = res.val();
+    if (dates) {
+      return Object.keys(dates);
+    }
 
-      return [];
-    });
+    return [];
+  });
 
 export const createTag = (
   user: string,
   type: TAG_TYPES,
   name: string,
-): firebaseApp.database.ThenableReference =>
-  database.ref(`${user}/tags`).push({ type, name });
+): ThenableReference => push(ref(database, `${user}/tags`), { type, name });
 
 export const addTagToDate = (
   user: string,
   date: string,
   tagId: string,
-): Promise<
-  [
-    firebaseApp.database.ThenableReference,
-    firebaseApp.database.ThenableReference,
-  ]
-> => database.ref(`${user}/tags/${tagId}/dates/${date}`).set(true);
+): Promise<void> =>
+  set(ref(database, `${user}/tags/${tagId}/dates/${date}`), true);
 
 export const createTagAndAddToDate = (
   user: string,
@@ -89,20 +85,15 @@ export const removeTagFromDate = (
   user: string,
   date: string,
   tagId: string,
-): Promise<void> =>
-  database
-    .ref(`${user}/tags/${tagId}/dates/${date}`)
-    .set(null)
+): Promise<void | null> =>
+  set(ref(database, `${user}/tags/${tagId}/dates/${date}`), null)
     // If that was the only time the tag was in use, delete the whole thing
     .then(() =>
-      database
-        .ref(`${user}/tags/${tagId}/dates/`)
-        .once('value')
-        .then((res) => {
-          const dates = res.val();
-          if (!dates) {
-            return database.ref(`${user}/tags/${tagId}`).set(null);
-          }
-          return null;
-        }),
+      get(ref(database, `${user}/tags/${tagId}/dates/`)).then((res) => {
+        const dates = res.val();
+        if (!dates) {
+          return set(ref(database, `${user}/tags/${tagId}`), null);
+        }
+        return null;
+      }),
     );

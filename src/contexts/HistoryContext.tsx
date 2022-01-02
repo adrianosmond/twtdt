@@ -9,6 +9,7 @@ import {
   SetStateAction,
   FormEvent,
 } from 'react';
+import { ref, onValue, off, query, limitToFirst } from 'firebase/database';
 import { format } from 'date-fns';
 import { CalendarDay, padWithZero } from 'utils/date';
 import { database } from 'lib/database';
@@ -58,9 +59,12 @@ export const HistoryProvider: FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const ref = database.ref(`${user}/archive/`).limitToFirst(1);
+    const archiveRef = query(
+      ref(database, `${user}/archive/`),
+      limitToFirst(1),
+    );
 
-    ref.on('value', (snapshot) => {
+    onValue(archiveRef, (snapshot) => {
       const earliestEntry = snapshot.val();
       if (earliestEntry) {
         const earliestDate = Object.keys(earliestEntry)[0];
@@ -69,7 +73,7 @@ export const HistoryProvider: FC = ({ children }) => {
       }
     });
 
-    return () => ref.off('value');
+    return () => off(archiveRef);
   }, [user]);
 
   const updateHistoryMonth = (e: FormEvent<HTMLSelectElement>) =>

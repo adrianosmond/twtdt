@@ -9,6 +9,7 @@ import {
   FC,
   ChangeEvent,
 } from 'react';
+import { ref, onValue, off } from 'firebase/database';
 import {
   database,
   createTagAndAddToDate,
@@ -107,9 +108,9 @@ export const TagProvider: FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const ref = database.ref(`${user}/tags/`);
+    const tagsRef = ref(database, `${user}/tags/`);
 
-    ref.on('value', (snapshot) => {
+    onValue(tagsRef, (snapshot) => {
       const tags = Object.entries(snapshot.val())
         .map(([key, data]) => ({
           key,
@@ -126,7 +127,7 @@ export const TagProvider: FC = ({ children }) => {
       }
     });
 
-    return () => ref.off('value');
+    return () => off(tagsRef);
   }, [user]);
 
   return (
