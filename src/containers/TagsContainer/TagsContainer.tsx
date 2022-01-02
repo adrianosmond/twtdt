@@ -6,12 +6,8 @@ import Typography from 'components/Typography';
 import { humanFriendlyDateString } from 'utils/date';
 import TagHeading from 'components/TagHeading';
 
-interface RouteParams {
-  tagId: string;
-}
-
 const TagsContainer: FC = () => {
-  const { tagId } = useParams<RouteParams>();
+  const { tagId } = useParams();
   const { allTags } = useTag();
   const tag = allTags.find((t) => t.key === tagId);
 

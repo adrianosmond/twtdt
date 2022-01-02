@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { saveMemory, loadMemory } from 'lib/database';
 import usePageVisibilityChange from 'hooks/usePageVisibilityChange';
 import useTodaysDate from 'hooks/useTodaysDate';
@@ -7,19 +7,15 @@ import { useUser } from 'contexts/UserContext';
 import { useMemory } from 'contexts/MemoryContext';
 import WritingForm from 'components/WritingForm';
 
-interface RouteParams {
-  date: string;
-}
-
 const WritingContainer: FC = () => {
   const user = useUser() as string;
   const { memory, updateMemory, setMemory } = useMemory();
   const toSave = useRef(memory);
-  const { date } = useParams<RouteParams>();
-  const history = useHistory();
+  const today = useTodaysDate();
+  const { date = today } = useParams();
+  const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const today = useTodaysDate();
 
   const updateDate = useCallback(
     (e) => {
@@ -28,10 +24,10 @@ const WritingContainer: FC = () => {
       if (value === '' || newDate > new Date()) {
         e.preventDefault();
       } else {
-        history.push(`/${value}`);
+        navigate(`/${value}`);
       }
     },
-    [history],
+    [navigate],
   );
 
   const save = useCallback(() => {

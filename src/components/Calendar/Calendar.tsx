@@ -18,7 +18,7 @@ const Calendar: FC<IHistory> = ({ entries, dates }) => (
 
       return (
         <Component
-          {...(canLink ? { to: `${yearStr}-${monthStr}-${dayStr}` } : {})}
+          {...(canLink ? { to: `/${yearStr}-${monthStr}-${dayStr}` } : {})}
           key={`${yearStr}-${monthStr}-${dayStr}`}
           className={classNames({
             'flex flex-col items-center': true,

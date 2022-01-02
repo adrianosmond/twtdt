@@ -1,22 +1,22 @@
+import { FC } from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
 } from 'react-router-dom';
 import { useUser } from 'contexts/UserContext';
-import useTodaysDate from 'hooks/useTodaysDate';
 import WritingContainer from 'containers/WritingContainer';
 import HistoryContainer from 'containers/HistoryContainer';
 import AllTagsContainer from 'containers/AllTagsContainer';
 import TagsContainer from 'containers/TagsContainer';
 import UnauthenticatedContainer from 'containers/UnauthenticatedContainer';
-import { FC } from 'react';
 import AppWrapper from 'components/AppWrapper';
 import Header from 'components/Header';
 import Typography from 'components/Typography';
+import useTodaysDate from 'hooks/useTodaysDate';
 
-const App:FC = () => {
+const App: FC = () => {
   const user = useUser();
   const today = useTodaysDate();
 
@@ -29,22 +29,22 @@ const App:FC = () => {
           This was the day that
         </Typography>
         {isAuthenticated ? (
-          <Switch>
-            <Route path="/history" exact component={HistoryContainer} />
-            <Route path="/tags" exact component={AllTagsContainer} />
-            <Route path="/tags/:tagId" exact component={TagsContainer} />
-            <Route path="/:date" component={WritingContainer} />
-            <Redirect to={`/${today}`} />
-          </Switch>
+          <Routes>
+            <Route path="/history" element={<HistoryContainer />} />
+            <Route path="/tags" element={<AllTagsContainer />} />
+            <Route path="/tags/:tagId" element={<TagsContainer />} />
+            <Route path="/:date" element={<WritingContainer />} />
+            <Route path="*" element={<Navigate to={`/${today}`} />} />
+          </Routes>
         ) : (
-          <Switch>
-            <Route path="/" exact component={UnauthenticatedContainer} />
-            <Redirect to="/" />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<UnauthenticatedContainer />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
         )}
       </AppWrapper>
     </Router>
   );
-}
+};
 
 export default App;
