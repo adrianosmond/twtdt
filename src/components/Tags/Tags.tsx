@@ -2,17 +2,25 @@ import { FC } from 'react';
 import TagLinkList from 'components/TagLinkList';
 import { KeyedTag, TAG_TYPES } from 'contexts/TagContext';
 
-interface TagsProps {
-  people: KeyedTag[];
-  places: KeyedTag[];
-  others: KeyedTag[];
+interface ITagSection {
+  heading: string;
+  type: TAG_TYPES;
 }
 
-const Tags: FC<TagsProps> = ({ people, places, others }) => (
+interface TagsProps {
+  tags: KeyedTag[];
+  sections: ITagSection[];
+}
+
+const Tags: FC<TagsProps> = ({ tags, sections }) => (
   <div className="mt-6 space-y-8">
-    <TagLinkList heading="People" tags={people} tagType={TAG_TYPES.PERSON} />
-    <TagLinkList heading="Places" tags={places} tagType={TAG_TYPES.PLACE} />
-    <TagLinkList heading="Others" tags={others} tagType={TAG_TYPES.GENERIC} />
+    {sections.map(({ heading, type }) => (
+      <TagLinkList
+        heading={heading}
+        tags={tags.filter((tag) => tag.type === type)}
+        tagType={type}
+      />
+    ))}
   </div>
 );
 

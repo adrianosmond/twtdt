@@ -5,11 +5,26 @@ import { useTag, TAG_TYPES } from 'contexts/TagContext';
 const AllTagsContainer: FC = () => {
   const { allTags } = useTag();
 
-  const people = allTags.filter((tag) => tag.type === TAG_TYPES.PERSON);
-  const places = allTags.filter((tag) => tag.type === TAG_TYPES.PLACE);
-  const generic = allTags.filter((tag) => tag.type === TAG_TYPES.GENERIC);
+  const sections = [
+    {
+      heading: 'People',
+      type: TAG_TYPES.PERSON,
+    },
+    {
+      heading: 'Places',
+      type: TAG_TYPES.PLACE,
+    },
+    {
+      heading: 'Films',
+      type: TAG_TYPES.FILM,
+    },
+    {
+      heading: 'Others',
+      type: TAG_TYPES.GENERIC,
+    },
+  ];
 
-  return <Tags people={people} places={places} others={generic} />;
+  return <Tags tags={allTags} sections={sections} />;
 };
 
 export default AllTagsContainer;
