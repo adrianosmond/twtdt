@@ -22,6 +22,7 @@ export enum TAG_TYPES {
   PERSON = 'PERSON',
   PLACE = 'PLACE',
   GENERIC = 'GENERIC',
+  FILM = 'FILM',
 }
 
 export interface ITag {
