@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from 'react';
-import TagTypeIcon from 'components/TagTypeIcon';
+import Icon from 'components/Icon';
 import { TAG_TYPES } from 'contexts/TagContext';
 
 interface NewTagButtonProps {
@@ -17,7 +17,7 @@ const NewTagButton: FC<NewTagButtonProps> = ({
 }) => (
   <>
     <div className="relative w-8 h-8 p-1 bg-blue-500 text-white border-r rounded-l-md">
-      <TagTypeIcon type={tagType} />
+      <Icon type={tagType} />
       <select
         className="absolute top-0 left-0 w-full h-full opacity-0"
         onChange={updateTagType}

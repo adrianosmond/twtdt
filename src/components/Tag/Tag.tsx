@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import TagTypeIcon from 'components/TagTypeIcon';
+import Icon from 'components/Icon';
 import { KeyedTag } from 'contexts/TagContext';
 
 interface TagProps {
@@ -22,7 +22,7 @@ const Tag: FC<TagProps> = ({
           to={`/tags/${tag.key}`}
           className="flex items-center p-2 flex-grow"
         >
-          <TagTypeIcon type={tag.type} className="w-4 h-4 fill-current mr-2" />
+          <Icon type={tag.type} className="w-4 h-4 fill-current mr-2" />
           {tag.name}
         </Link>
         <button
@@ -41,7 +41,7 @@ const Tag: FC<TagProps> = ({
       </>
     ) : (
       <div className="flex items-center p-2 flex-grow">
-        <TagTypeIcon type={tag.type} className="w-4 h-4 fill-current mr-2" />
+        <Icon type={tag.type} className="w-4 h-4 fill-current mr-2" />
         {tag.name}
       </div>
     )}
