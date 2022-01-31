@@ -1,8 +1,8 @@
-import { FC, FormEvent, useState } from 'react';
+import { VFC, FormEvent, useState } from 'react';
 import { login } from 'lib/auth';
 import LoginForm from 'components/LoginForm';
 
-const LoginContainer: FC = () => {
+const LoginContainer: VFC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const onSubmit = (e: FormEvent) => {

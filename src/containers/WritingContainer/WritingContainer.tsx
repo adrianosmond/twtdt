@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { VFC, useCallback, useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { sub, add } from 'date-fns';
 import { saveMemory, loadMemory } from 'lib/database';
@@ -9,7 +9,7 @@ import { useMemory } from 'contexts/MemoryContext';
 import WritingForm from 'components/WritingForm';
 import { formatDateString } from 'utils/date';
 
-const WritingContainer: FC = () => {
+const WritingContainer: VFC = () => {
   const user = useUser() as string;
   const { memory, updateMemory, setMemory } = useMemory();
   const toSave = useRef(memory);

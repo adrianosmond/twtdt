@@ -1,8 +1,8 @@
-import { FC, FormEvent, useState } from 'react';
+import { VFC, FormEvent, useState } from 'react';
 import { createUser } from 'lib/auth';
 import SignUpForm from 'components/SignUpForm';
 
-const SignUpContainer: FC = () => {
+const SignUpContainer: VFC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');

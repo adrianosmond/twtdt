@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { VFC } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,7 +16,7 @@ import Header from 'components/Header';
 import Typography from 'components/Typography';
 import useTodaysDate from 'hooks/useTodaysDate';
 
-const App: FC = () => {
+const App: VFC = () => {
   const user = useUser();
   const today = useTodaysDate();
 

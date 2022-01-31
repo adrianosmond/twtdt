@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { VFC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useTag } from 'contexts/TagContext';
 import LinkList from 'components/LinkList';
@@ -6,7 +6,7 @@ import Typography from 'components/Typography';
 import { humanFriendlyDateString } from 'utils/date';
 import TagHeading from 'components/TagHeading';
 
-const TagsContainer: FC = () => {
+const TagsContainer: VFC = () => {
   const { tagId } = useParams();
   const { allTags } = useTag();
   const tag = allTags.find((t) => t.key === tagId);

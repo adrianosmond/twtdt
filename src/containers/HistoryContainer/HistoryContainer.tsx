@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { VFC, useEffect, useState } from 'react';
 import { useUser } from 'contexts/UserContext';
 import { useHistory } from 'contexts/HistoryContext';
 import Loading from 'components/Loading';
@@ -7,7 +7,7 @@ import { loadDatesWithEntries } from 'lib/database';
 import { createCalendarDays } from 'utils/date';
 import MonthYearSelects from 'components/MonthYearSelects';
 
-const HistoryContainer: FC = () => {
+const HistoryContainer: VFC = () => {
   const [loaded, setLoaded] = useState(false);
   const user = useUser() as string;
   const {

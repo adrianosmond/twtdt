@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { VFC } from 'react';
 import LoginContainer from 'containers/LoginContainer';
 import SignUpContainer from 'containers/SignUpContainer';
 import Flexer from 'components/Flexer';
 
-const UnauthenticatedContainer: FC = () => (
+const UnauthenticatedContainer: VFC = () => (
   <Flexer>
     <LoginContainer />
     <SignUpContainer />

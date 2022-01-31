@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { VFC } from 'react';
 import Tags from 'components/Tags';
 import { useTag, TAG_TYPES } from 'contexts/TagContext';
 
-const AllTagsContainer: FC = () => {
+const AllTagsContainer: VFC = () => {
   const { allTags } = useTag();
 
   const sections = [
