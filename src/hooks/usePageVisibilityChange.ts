@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 
 type Options = {
-  onHide?: () => void
-  onShow?: () => void
-}
+  onHide?: () => void;
+  onShow?: () => void;
+};
 
-const usePageVisibilityChange: (options: Options) => void = ({onHide, onShow} = {}) => {
+const usePageVisibilityChange: (options: Options) => void = ({
+  onHide,
+  onShow,
+} = {}) => {
   useEffect(() => {
     const visibilityChangeHandler = () => {
       if (document.hidden && onHide) {
@@ -16,10 +19,23 @@ const usePageVisibilityChange: (options: Options) => void = ({onHide, onShow} = 
       }
     };
 
-    document.addEventListener('visibilitychange', visibilityChangeHandler);
+    const focusHandler = () => {
+      if (onShow) onShow();
+    };
 
-    return () =>
+    const blurHandler = () => {
+      if (onHide) onHide();
+    };
+
+    document.addEventListener('visibilitychange', visibilityChangeHandler);
+    window.addEventListener('focus', focusHandler);
+    window.addEventListener('blur', blurHandler);
+
+    return () => {
       document.removeEventListener('visibilitychange', visibilityChangeHandler);
+      window.removeEventListener('focus', focusHandler);
+      window.removeEventListener('blur', blurHandler);
+    };
   }, [onHide, onShow]);
 };
 

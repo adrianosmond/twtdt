@@ -64,7 +64,7 @@ const WritingContainer: FC = () => {
     toSave.current = memory;
   }, [memory]);
 
-  usePageVisibilityChange({ onShow: load, onHide: save });
+  usePageVisibilityChange({ onShow: load });
 
   return (
     <WritingForm
