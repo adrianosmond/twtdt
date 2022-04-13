@@ -1,4 +1,11 @@
-import { VFC, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  VFC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  FormEvent,
+} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { sub, add } from 'date-fns';
 import { saveMemory, loadMemory } from 'lib/database';
@@ -18,6 +25,7 @@ const WritingContainer: VFC = () => {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [lastUpdateTime, setLastUpdateTime] = useState(0);
 
   const updateDate = useCallback(
     (e) => {
@@ -44,9 +52,13 @@ const WritingContainer: VFC = () => {
   }, [date, today, navigate]);
 
   const save = useCallback(() => {
-    setIsSaving(true);
-    saveMemory(user, date, toSave.current).finally(() => setIsSaving(false));
-  }, [user, date]);
+    const hasEditedInLastHour =
+      new Date().getTime() - lastUpdateTime <= 60000 * 60;
+    if (!isLoading && hasEditedInLastHour) {
+      setIsSaving(true);
+      saveMemory(user, date, toSave.current).finally(() => setIsSaving(false));
+    }
+  }, [lastUpdateTime, isLoading, user, date]);
 
   const load = useCallback(() => {
     setIsLoading(true);
@@ -56,15 +68,31 @@ const WritingContainer: VFC = () => {
     });
   }, [date, setMemory, user]);
 
+  const update = useCallback(
+    (e: FormEvent) => {
+      updateMemory(e);
+      setLastUpdateTime(new Date().getTime());
+    },
+    [updateMemory],
+  );
+
   useEffect(() => {
     load();
   }, [load]);
+
+  const loadIfChanged = useCallback(() => {
+    const noEditsInLastHour =
+      new Date().getTime() - lastUpdateTime > 60000 * 60;
+    if (noEditsInLastHour || memory.length === 0) {
+      load();
+    }
+  }, [lastUpdateTime, load, memory.length]);
 
   useEffect(() => {
     toSave.current = memory;
   }, [memory]);
 
-  usePageVisibilityChange({ onShow: load, onHide: save });
+  usePageVisibilityChange({ onShow: loadIfChanged, onHide: save });
 
   return (
     <WritingForm
@@ -73,7 +101,7 @@ const WritingContainer: VFC = () => {
       goToYesterday={goToYesterday}
       goToTomorrow={goToTomorrow}
       content={memory}
-      updateContent={updateMemory}
+      updateContent={update}
       save={save}
       isLoading={isLoading}
       isSaving={isSaving}
